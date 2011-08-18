@@ -1,8 +1,6 @@
 package org.springhispano.java7.showcase
 
-
 import grails.converters.JSON
-import grails.converters.XML
 
 class TwitterExportController {
 	def twitter
@@ -19,11 +17,11 @@ class TwitterExportController {
 		render twitter.friendOperations().getFriends() as JSON
 	}
 	def updateStatus = {
-		def message = params.message
+		def message = (params.message ?: params.id) ?: 'A poco no rifa Grails?'
         render twitter.timelineOperations().updateStatus(message) as JSON
 	}
 	def search = {
-		def query = params.id
+		def query = (params.id ?: params.q) ?: 'Grails'
         def tweets = twitter.searchOperations().search(query).getTweets()
 		render tweets as JSON
 	}
